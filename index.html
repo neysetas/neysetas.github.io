@@ -42,25 +42,15 @@
 
   /* ── Auth screen ── */
   #auth-screen {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    padding: 20px;
+    display: flex; align-items: center; justify-content: center;
+    min-height: 100vh; padding: 20px;
   }
   .auth-box {
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    border-radius: var(--radius2);
-    padding: 40px 36px;
-    width: 100%;
-    max-width: 380px;
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: var(--radius2); padding: 40px 36px;
+    width: 100%; max-width: 380px;
   }
-  .auth-logo {
-    font-family: 'DM Mono', monospace;
-    font-size: 24px; font-weight: 500;
-    color: var(--accent); margin-bottom: 6px;
-  }
+  .auth-logo { font-family: 'DM Mono', monospace; font-size: 24px; font-weight: 500; color: var(--accent); margin-bottom: 6px; }
   .auth-logo span { color: var(--text3); }
   .auth-subtitle { font-size: 13px; color: var(--text3); margin-bottom: 28px; }
   .auth-tabs { display: flex; gap: 4px; margin-bottom: 24px; }
@@ -82,7 +72,8 @@
     display: grid;
     grid-template-columns: 240px 1fr;
     grid-template-rows: 56px 1fr;
-    min-height: 100vh;
+    height: 100vh;
+    overflow: hidden;
   }
   header {
     grid-column: 1/-1;
@@ -91,14 +82,12 @@
     border-bottom: 1px solid var(--border);
     background: var(--bg);
     gap: 12px;
-    position: sticky; top: 0; z-index: 100;
+    z-index: 100;
+    flex-shrink: 0;
   }
-  .logo {
-    font-family: 'DM Mono', monospace;
-    font-size: 18px; font-weight: 500;
-    letter-spacing: -0.5px; color: var(--accent);
-  }
+  .logo { font-family: 'DM Mono', monospace; font-size: 18px; font-weight: 500; letter-spacing: -0.5px; color: var(--accent); }
   .logo span { color: var(--text3); }
+  .logo-by { font-size: 10px; color: var(--text3); opacity: 0.3; font-family: 'DM Mono', monospace; margin-left: 2px; align-self: flex-end; padding-bottom: 3px; letter-spacing: 0; font-weight: 300; }
   header nav { display: flex; gap: 4px; margin-left: auto; }
   header nav button {
     background: none; border: none; color: var(--text2);
@@ -120,31 +109,54 @@
     padding: 4px 8px; border-radius: 5px; transition: color .15s;
   }
   .logout-btn:hover { color: var(--danger); }
+
+  /* ── Sidebar — scrolls independently ── */
   sidebar {
-    display: block;
+    display: flex;
+    flex-direction: column;
     border-right: 1px solid var(--border);
-    padding: 24px 0;
     background: var(--bg2);
-    overflow-y: auto;
+    overflow: hidden;
+    height: 100%;
   }
-  .sidebar-section { padding: 0 16px 20px; }
+  .sidebar-top {
+    padding: 20px 16px 12px;
+    flex-shrink: 0;
+    border-bottom: 1px solid var(--border);
+  }
   .sidebar-label {
     font-family: 'DM Mono', monospace;
     font-size: 10px; font-weight: 500; color: var(--text3);
     letter-spacing: 1.2px; text-transform: uppercase;
-    margin-bottom: 8px; padding: 0 4px;
+    margin-bottom: 10px; padding: 0 4px;
   }
-  main { padding: 32px 36px; overflow-y: auto; }
+  .sidebar-search {
+    position: relative;
+  }
+  .sidebar-search input {
+    padding: 8px 12px 8px 32px;
+    font-size: 12px;
+    border-radius: 7px;
+  }
+  .sidebar-search-icon {
+    position: absolute; left: 10px; top: 50%;
+    transform: translateY(-50%);
+    color: var(--text3); font-size: 12px; pointer-events: none;
+  }
+  .sidebar-scroll {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px 16px 20px;
+  }
+
+  main { padding: 32px 36px; overflow-y: auto; height: 100%; }
 
   /* ── Pages ── */
   .page { display: none; }
   .page.active { display: block; }
 
   /* ── Cards ── */
-  .card {
-    background: var(--bg2); border: 1px solid var(--border);
-    border-radius: var(--radius2); padding: 24px;
-  }
+  .card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius2); padding: 24px; }
   .card-title {
     font-size: 12px; font-weight: 600; color: var(--text3);
     letter-spacing: .8px; text-transform: uppercase;
@@ -156,13 +168,9 @@
   .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
 
   /* ── Form ── */
-  label.field-label {
-    display: block; font-size: 12px; font-weight: 500;
-    color: var(--text2); margin-bottom: 6px; letter-spacing: .3px;
-  }
+  label.field-label { display: block; font-size: 12px; font-weight: 500; color: var(--text2); margin-bottom: 6px; letter-spacing: .3px; }
   input, select, textarea {
-    width: 100%;
-    background: var(--bg3); border: 1px solid var(--border);
+    width: 100%; background: var(--bg3); border: 1px solid var(--border);
     color: var(--text); font-family: inherit; font-size: 14px;
     padding: 10px 14px; border-radius: var(--radius);
     outline: none; transition: border-color .15s; appearance: none;
@@ -188,14 +196,12 @@
   .btn-danger:hover { border-color: var(--danger); }
 
   /* ── Category badges ── */
-  .cat-badge {
-    display: inline-block; padding: 3px 9px;
-    border-radius: 20px; font-size: 11px; font-weight: 600; letter-spacing: .3px;
-  }
+  .cat-badge { display: inline-block; padding: 3px 9px; border-radius: 20px; font-size: 11px; font-weight: 600; letter-spacing: .3px; }
   .cat-finger    { background: rgba(255,169,77,.15);  color: #ffa94d; }
   .cat-endurance { background: rgba(91,192,235,.15);  color: #5bc0eb; }
   .cat-strength  { background: rgba(127,255,110,.15); color: #7fff6e; }
   .cat-technique { background: rgba(200,150,255,.15); color: #c896ff; }
+  .cat-climbing  { background: rgba(200,150,255,.15); color: #c896ff; }
   .cat-power     { background: rgba(255,107,107,.15); color: #ff6b6b; }
   .cat-mobility  { background: rgba(255,213,79,.15);  color: #ffd34f; }
 
@@ -221,8 +227,8 @@
   .remove-btn:hover { color: var(--danger); }
 
   /* ── Sidebar exercise picker ── */
-  .excat-group { margin-bottom: 12px; }
-  .excat-header { font-size: 11px; font-weight: 600; color: var(--text3); letter-spacing: .5px; margin-bottom: 4px; padding: 0 4px; }
+  .excat-group { margin-bottom: 14px; }
+  .excat-header { font-size: 11px; font-weight: 600; letter-spacing: .5px; margin-bottom: 4px; padding: 0 4px; }
   .ex-btn {
     width: 100%; text-align: left; background: none; border: none;
     color: var(--text2); font-family: inherit; font-size: 13px;
@@ -231,6 +237,7 @@
   }
   .ex-btn:hover { background: var(--bg3); color: var(--text); }
   .ex-btn .dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+  .ex-btn.hidden { display: none; }
 
   /* ── Session cards ── */
   .session-card {
@@ -245,22 +252,13 @@
   .session-exercises { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
 
   /* ── Stats ── */
-  .stat-tile {
-    background: var(--bg2); border: 1px solid var(--border);
-    border-radius: var(--radius2); padding: 20px 24px;
-  }
-  .stat-tile .val {
-    font-family: 'DM Mono', monospace; font-size: 32px; font-weight: 300;
-    color: var(--accent); letter-spacing: -1px; line-height: 1; margin-bottom: 4px;
-  }
+  .stat-tile { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius2); padding: 20px 24px; }
+  .stat-tile .val { font-family: 'DM Mono', monospace; font-size: 32px; font-weight: 300; color: var(--accent); letter-spacing: -1px; line-height: 1; margin-bottom: 4px; }
   .stat-tile .label { font-size: 12px; color: var(--text3); font-weight: 500; letter-spacing: .3px; }
   .chart-wrap { position: relative; height: 280px; }
 
   /* ── Period tabs ── */
-  .period-tabs {
-    display: flex; gap: 4px; background: var(--bg3);
-    border-radius: 8px; padding: 3px; width: fit-content; margin-bottom: 20px;
-  }
+  .period-tabs { display: flex; gap: 4px; background: var(--bg3); border-radius: 8px; padding: 3px; width: fit-content; margin-bottom: 20px; }
   .period-tab {
     background: none; border: none; font-family: inherit; font-size: 12px; font-weight: 500;
     color: var(--text3); padding: 5px 14px; border-radius: 5px; cursor: pointer; transition: all .15s;
@@ -279,6 +277,33 @@
   .sync-ok  { background: var(--accent-dim); color: var(--accent); }
   .sync-ing { background: var(--warn-dim); color: var(--warn); }
   .sync-err { background: var(--danger-dim); color: var(--danger); }
+
+  /* ── Evolution graphs section ── */
+  .evo-section { margin-top: 24px; }
+  .evo-controls {
+    display: flex; gap: 12px; align-items: center; flex-wrap: wrap;
+    margin-bottom: 20px;
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: var(--radius2); padding: 16px 20px;
+  }
+  .evo-controls label.field-label { margin: 0; white-space: nowrap; }
+  .evo-controls select { max-width: 220px; }
+  .evo-metric-toggles { display: flex; gap: 8px; flex-wrap: wrap; }
+  .metric-toggle {
+    background: var(--bg3); border: 1px solid var(--border);
+    color: var(--text3); font-family: inherit; font-size: 12px; font-weight: 500;
+    padding: 5px 12px; border-radius: 20px; cursor: pointer; transition: all .15s;
+  }
+  .metric-toggle.active { border-color: var(--accent); color: var(--accent); background: var(--accent-dim); }
+  .evo-graphs { display: flex; flex-direction: column; gap: 16px; }
+  .evo-card {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: var(--radius2); padding: 24px;
+  }
+  .evo-card-title { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+  .evo-card-sub { font-size: 12px; color: var(--text3); margin-bottom: 16px; }
+  .evo-chart-wrap { position: relative; height: 220px; }
+  .evo-empty { color: var(--text3); font-size: 13px; padding: 20px 0; }
 
   /* ── Toast ── */
   #toast {
@@ -303,9 +328,9 @@
   .page-subtitle { font-size: 14px; color: var(--text3); margin-bottom: 28px; }
 
   @media (max-width: 768px) {
-    .shell { grid-template-columns: 1fr; }
+    .shell { grid-template-columns: 1fr; height: auto; overflow: visible; }
     sidebar { display: none; }
-    main { padding: 20px 16px; }
+    main { height: auto; padding: 20px 16px; }
     .grid-2, .grid-3 { grid-template-columns: 1fr; }
   }
   ::-webkit-scrollbar { width: 5px; }
@@ -342,6 +367,7 @@
   <div class="shell">
     <header>
       <div class="logo">send<span>//</span>it</div>
+      <span class="logo-by">by Ney Setas</span>
       <nav>
         <button class="active" onclick="showPage('log',this)">Log session</button>
         <button onclick="showPage('history',this)">History</button>
@@ -356,8 +382,14 @@
     </header>
 
     <sidebar>
-      <div class="sidebar-section">
+      <div class="sidebar-top">
         <div class="sidebar-label">Add exercises</div>
+        <div class="sidebar-search">
+          <span class="sidebar-search-icon">⌕</span>
+          <input type="text" id="sidebar-search" placeholder="Search..." oninput="filterSidebar(this.value)">
+        </div>
+      </div>
+      <div class="sidebar-scroll">
         <div id="sidebar-exercises"></div>
       </div>
     </sidebar>
@@ -374,11 +406,11 @@
           </div>
           <div class="field-group">
             <label class="field-label">Location</label>
-            <input type="text" id="session-location" placeholder="e.g. Centro de Escalada, Moonboard">
+            <input type="text" id="session-location" placeholder="e.g. São Rock, Facho">
           </div>
         </div>
         <div id="exercise-list">
-          <div class="empty-state" id="ex-empty">
+          <div class="empty-state">
             <div class="empty-icon">🪨</div>
             <div>Click exercises in the sidebar to add them.</div>
           </div>
@@ -423,9 +455,23 @@
             <div class="chart-wrap"><canvas id="pie-chart"></canvas></div>
           </div>
         </div>
-        <div class="card">
+        <div class="card" style="margin-bottom:20px">
           <div class="card-title">Sessions over time</div>
           <div class="chart-wrap"><canvas id="line-chart"></canvas></div>
+        </div>
+
+        <!-- EVOLUTION GRAPHS -->
+        <div class="evo-section">
+          <div class="evo-controls">
+            <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;width:100%">
+              <label class="field-label" style="margin:0;flex-shrink:0">Exercise evolution —</label>
+              <select id="evo-exercise-select" onchange="buildEvoGraph()" style="max-width:240px;flex:1">
+                <option value="">Select an exercise...</option>
+              </select>
+              <div class="evo-metric-toggles" id="evo-metric-toggles"></div>
+            </div>
+          </div>
+          <div id="evo-graph-container"></div>
         </div>
       </div>
     </main>
@@ -436,7 +482,7 @@
 
 <script>
 // ═══════════════════════════════════════════
-// SUPABASE INIT
+// SUPABASE
 // ═══════════════════════════════════════════
 const { createClient } = supabase;
 const sb = createClient(
@@ -448,49 +494,62 @@ const sb = createClient(
 // EXERCISE DATA
 // ═══════════════════════════════════════════
 const CATEGORIES = {
-  finger:    { label: 'Finger',    color: '#ffa94d' },
-  endurance: { label: 'Endurance', color: '#5bc0eb' },
-  strength:  { label: 'Strength',  color: '#7fff6e' },
-  technique: { label: 'Technique', color: '#c896ff' },
-  power:     { label: 'Power',     color: '#ff6b6b' },
-  mobility:  { label: 'Mobility',  color: '#ffd34f' },
+  finger:    { label: 'Fingers',    color: '#ffa94d' },
+  strength:  { label: 'Strength',   color: '#7fff6e' },
+  climbing:  { label: 'Climbing',   color: '#c896ff' },
+  technique: { label: 'Technique',  color: '#c896ff' },
+  power:     { label: 'Power',      color: '#ff6b6b' },
+  mobility:  { label: 'Mobility',   color: '#ffd34f' },
+  endurance: { label: 'Endurance',  color: '#5bc0eb' },
 };
 
+// cats[0] = primary category (where it appears in sidebar)
+// trackable: true = eligible for evolution graphs
 const EXERCISES = [
-  { id: 'hangboard_max',    name: 'Max hangs',            cats: ['finger'],              metrics: ['weight','sets','time'] },
-  { id: 'hangboard_rep',    name: 'Repeaters',            cats: ['finger','endurance'],  metrics: ['sets','time'] },
-  { id: 'hangboard_hng',    name: 'Half-crimp hang',      cats: ['finger'],              metrics: ['weight','sets','time'] },
-  { id: 'fingerboard_slop', name: 'Open-hand hang',       cats: ['finger'],              metrics: ['weight','sets','time'] },
-  { id: 'pinch_block',      name: 'Pinch block',          cats: ['finger','strength'],   metrics: ['weight','sets','reps'] },
-  { id: 'arc_traverse',     name: 'ARC traversing',       cats: ['endurance'],           metrics: ['duration'] },
-  { id: 'circuit_board',    name: 'Circuit board laps',   cats: ['endurance'],           metrics: ['sets','reps'] },
-  { id: 'route_4x4',        name: '4×4s',                 cats: ['endurance','power'],   metrics: ['sets'] },
-  { id: 'campusing_end',    name: 'Campus endurance',     cats: ['endurance'],           metrics: ['sets','reps'] },
-  { id: 'pullups',          name: 'Pull-ups',             cats: ['strength'],            metrics: ['weight','sets','reps'] },
-  { id: 'lock_offs',        name: 'Lock-offs',            cats: ['strength'],            metrics: ['sets','time'] },
-  { id: 'front_levers',     name: 'Front lever',          cats: ['strength'],            metrics: ['sets','time'] },
-  { id: 'core_tension',     name: 'Core tension',         cats: ['strength'],            metrics: ['sets','reps'] },
-  { id: 'lat_pulldown',     name: 'Lat pulldown',         cats: ['strength'],            metrics: ['weight','sets','reps'] },
-  { id: 'campus_max',       name: 'Campus max moves',     cats: ['power','finger'],      metrics: ['sets','reps'] },
-  { id: 'dyno_training',    name: 'Dyno training',        cats: ['power'],               metrics: ['sets','reps'] },
-  { id: 'kilterboard',      name: 'Kilterboard boulders', cats: ['power','technique'],   metrics: ['sets'] },
-  { id: 'moonboard',        name: 'Moonboard boulders',   cats: ['power','technique'],   metrics: ['sets'] },
-  { id: 'boulder_proj',     name: 'Boulder projects',     cats: ['power','technique'],   metrics: ['sets'] },
-  { id: 'slab_drills',      name: 'Slab technique',       cats: ['technique'],           metrics: ['duration'] },
-  { id: 'footwork_drills',  name: 'Footwork drills',      cats: ['technique'],           metrics: ['sets','reps'] },
-  { id: 'movement_games',   name: 'Movement games',       cats: ['technique'],           metrics: ['duration'] },
-  { id: 'route_reading',    name: 'Route reading',        cats: ['technique'],           metrics: ['duration'] },
-  { id: 'lead_climbing',    name: 'Lead climbing',        cats: ['technique','endurance'], metrics: ['sets'] },
-  { id: 'hip_flex',         name: 'Hip flexibility',      cats: ['mobility'],            metrics: ['duration'] },
-  { id: 'shoulder_mob',     name: 'Shoulder mobility',    cats: ['mobility'],            metrics: ['sets','reps'] },
-  { id: 'wrist_warm',       name: 'Wrist warm-up',        cats: ['mobility'],            metrics: ['duration'] },
-  { id: 'antagonist',       name: 'Antagonist training',  cats: ['mobility','strength'], metrics: ['sets','reps'] },
+  // Finger
+  { id: 'hangboard_max',    name: 'Max hangs',             cats: ['finger'],                         metrics: ['weight','sets','time','edge'],        trackable: true,  trackMetric: 'weight' },
+  { id: 'hangboard_rep',    name: 'Repeaters',             cats: ['finger','endurance'],             metrics: ['weight','sets','reps','time','edge'], trackable: true,  trackMetric: 'weight' },
+  { id: 'hangboard_pumax',  name: 'Pick-ups reps',         cats: ['finger'],                         metrics: ['weight','reps','sets','edge'],        trackable: true,  trackMetric: 'weight' },
+  { id: 'hangboard_putime', name: 'Pick-ups time',         cats: ['finger'],                         metrics: ['weight','sets','time','edge'],        trackable: true,  trackMetric: 'weight' },
+  { id: 'hangboard_drag',   name: 'Drag hangs',            cats: ['finger'],                         metrics: ['weight','sets','time','edge'],        trackable: true,  trackMetric: 'weight' },
+  { id: 'hangboard_dragpu', name: 'Drag pick-ups',         cats: ['finger'],                         metrics: ['weight','sets','time','edge'],        trackable: true,  trackMetric: 'weight' },
+  { id: 'pinch_block',      name: 'Pinch pick-ups',        cats: ['finger'],                         metrics: ['weight','sets','reps'],               trackable: true,  trackMetric: 'weight' },
+  // Endurance
+  { id: 'arc_traverse',     name: 'ARC traversing',        cats: ['endurance'],                      metrics: ['duration'],                          trackable: false },
+  { id: 'circuit_board',    name: 'Circuit board laps',    cats: ['endurance'],                      metrics: ['sets','reps'],                       trackable: false },
+  { id: 'route_4x4',        name: '4×4s',                  cats: ['endurance'],                      metrics: ['sets'],                              trackable: false },
+  // Strength
+  { id: 'pullups',          name: 'Pull-ups',              cats: ['strength'],                       metrics: ['weight','sets','reps'],               trackable: true,  trackMetric: 'weight' },
+  { id: 'lock_offs',        name: 'Lock-offs',             cats: ['strength'],                       metrics: ['sets','time'],                       trackable: true,  trackMetric: 'time' },
+  { id: 'front_levers',     name: 'Front lever',           cats: ['strength'],                       metrics: ['sets','time'],                       trackable: true,  trackMetric: 'time' },
+  { id: 'push_ups',         name: 'Push-ups',              cats: ['strength'],                       metrics: ['sets','reps'],                       trackable: false },
+  { id: 'lat_pulldown',     name: 'Lat pulldown',          cats: ['strength'],                       metrics: ['weight','sets','reps'],               trackable: true,  trackMetric: 'weight' },
+  // Power
+  { id: 'campus_max',       name: 'Campus',                cats: ['power','finger'],                 metrics: ['sets','reps'],                       trackable: false },
+  { id: 'kilterboard',      name: 'Kilterboard',           cats: ['power','technique','finger'],      metrics: ['time'],                              trackable: false },
+  { id: 'moonboard',        name: 'Moonboard',             cats: ['power','technique','finger'],      metrics: ['time'],                              trackable: false },
+  { id: 'tensionboard',     name: 'Tensionboard',          cats: ['power','technique','finger'],      metrics: ['time'],                              trackable: false },
+  { id: 'spraywall',        name: 'Spraywall',             cats: ['power','technique','finger'],      metrics: ['time'],                              trackable: false },
+  { id: 'boulder_proj',     name: 'Boulder projects',      cats: ['power','technique','finger'],      metrics: ['sets'],                              trackable: false },
+  // Technique
+  { id: 'cordi_training',   name: 'Coordination training', cats: ['technique','power'],              metrics: ['sets','reps'],                       trackable: false },
+  { id: 'slab_drills',      name: 'Slabs',                 cats: ['technique'],                      metrics: ['duration'],                          trackable: false },
+  { id: 'footwork_drills',  name: 'Footwork drills',       cats: ['technique'],                      metrics: ['sets','reps'],                       trackable: false },
+  { id: 'lead_climbing',    name: 'Lead climbing',         cats: ['technique','endurance'],           metrics: ['sets'],                              trackable: false },
+  // Mobility
+  { id: 'hip_flex',         name: 'Hip flexibility',       cats: ['mobility'],                       metrics: ['duration'],                          trackable: false },
+  { id: 'ham_flex',         name: 'Hamstring flexibility', cats: ['mobility'],                       metrics: ['duration'],                          trackable: false },
+  { id: 'shoulder_mob',     name: 'Shoulder mobility',     cats: ['mobility'],                       metrics: ['sets','reps'],                       trackable: false },
+  { id: 'wrist_warm',       name: 'Wrist warm-up',         cats: ['mobility'],                       metrics: ['duration'],                          trackable: false },
 ];
 
 const METRIC_LABELS = {
   weight: 'Weight (kg)', sets: 'Sets', reps: 'Reps',
-  time: 'Time (s)', duration: 'Duration (min)',
+  time: 'Time (s)', duration: 'Duration (min)', edge: 'Edge (mm)',
 };
+
+// Metrics that make sense to graph (excludes edge which is categorical)
+const GRAPHABLE_METRICS = ['weight', 'time', 'sets', 'reps', 'duration'];
 
 // ═══════════════════════════════════════════
 // STATE
@@ -500,8 +559,10 @@ let currentItems = [];
 let currentPeriod = 7;
 let pieChartInst = null;
 let lineChartInst = null;
+let evoChartInst = null;
 let currentUser = null;
 let authMode = 'login';
+let evoActiveMetrics = new Set();
 
 // ═══════════════════════════════════════════
 // AUTH
@@ -537,47 +598,35 @@ async function submitAuth() {
   const password = document.getElementById('auth-password').value;
   const btn = document.getElementById('auth-btn');
   if (!email || !password) { showAuthError('Enter email and password.'); return; }
-  btn.disabled = true;
-  btn.textContent = '...';
+  btn.disabled = true; btn.textContent = '...';
   document.getElementById('auth-error').style.display = 'none';
-
   const { error } = authMode === 'login'
     ? await sb.auth.signInWithPassword({ email, password })
     : await sb.auth.signUp({ email, password });
-
   btn.disabled = false;
   btn.textContent = authMode === 'login' ? 'Log in' : 'Sign up';
-
-  if (error) {
-    showAuthError(error.message);
-  } else if (authMode === 'signup') {
-    showAuthError('Check your email to confirm your account, then log in.');
-  }
+  if (error) showAuthError(error.message);
+  else if (authMode === 'signup') showAuthError('Check your email to confirm your account, then log in.');
 }
 
 function showAuthError(msg) {
   const el = document.getElementById('auth-error');
-  el.textContent = msg;
-  el.style.display = 'block';
+  el.textContent = msg; el.style.display = 'block';
 }
 
-async function logout() {
-  await sb.auth.signOut();
-}
+async function logout() { await sb.auth.signOut(); }
 
 // ═══════════════════════════════════════════
 // DATA — Supabase CRUD
 // ═══════════════════════════════════════════
 async function loadSessions() {
   setSyncBadge('ing', 'syncing...');
-  const { data, error } = await sb
-    .from('sessions')
-    .select('*')
-    .order('date', { ascending: false });
+  const { data, error } = await sb.from('sessions').select('*').order('date', { ascending: false });
   if (error) { setSyncBadge('err', 'sync error'); toast('Error loading sessions.'); return; }
   sessions = data || [];
   setSyncBadge('ok', 'synced');
   refreshStats();
+  populateEvoSelect();
 }
 
 async function saveSession() {
@@ -585,7 +634,6 @@ async function saveSession() {
   const btn = document.getElementById('save-btn');
   btn.disabled = true;
   setSyncBadge('ing', 'saving...');
-
   const session = {
     id: Date.now(),
     user_id: currentUser.id,
@@ -594,17 +642,16 @@ async function saveSession() {
     notes: document.getElementById('session-notes').value.trim(),
     exercises: currentItems.map(i => ({ ...i })),
   };
-
   const { error } = await sb.from('sessions').insert(session);
   btn.disabled = false;
   if (error) { setSyncBadge('err', 'save failed'); toast('Error saving: ' + error.message); return; }
-
   sessions.unshift(session);
   sessions.sort((a,b) => b.date.localeCompare(a.date));
   setSyncBadge('ok', 'synced');
   clearForm();
   toast('Session saved ✓');
   refreshStats();
+  populateEvoSelect();
 }
 
 async function deleteSession(id) {
@@ -616,6 +663,7 @@ async function deleteSession(id) {
   setSyncBadge('ok', 'synced');
   renderHistory();
   refreshStats();
+  populateEvoSelect();
   toast('Session deleted.');
 }
 
@@ -629,9 +677,14 @@ function setSyncBadge(state, text) {
 // SIDEBAR
 // ═══════════════════════════════════════════
 function buildSidebar() {
+  // Each exercise appears only under its first (primary) category
   const grouped = {};
   Object.keys(CATEGORIES).forEach(k => grouped[k] = []);
-  EXERCISES.forEach(ex => ex.cats.forEach(c => { if (grouped[c]) grouped[c].push(ex); }));
+  EXERCISES.forEach(ex => {
+    const primary = ex.cats[0];
+    if (grouped[primary]) grouped[primary].push(ex);
+  });
+
   const container = document.getElementById('sidebar-exercises');
   container.innerHTML = '';
   Object.entries(grouped).forEach(([catKey, exes]) => {
@@ -639,15 +692,30 @@ function buildSidebar() {
     const cat = CATEGORIES[catKey];
     const div = document.createElement('div');
     div.className = 'excat-group';
+    div.dataset.cat = catKey;
     div.innerHTML = `<div class="excat-header" style="color:${cat.color}">${cat.label.toUpperCase()}</div>`;
     exes.forEach(ex => {
       const btn = document.createElement('button');
       btn.className = 'ex-btn';
+      btn.dataset.name = ex.name.toLowerCase();
       btn.innerHTML = `<span class="dot" style="background:${cat.color}"></span>${ex.name}`;
       btn.onclick = () => addExercise(ex.id);
       div.appendChild(btn);
     });
     container.appendChild(div);
+  });
+}
+
+function filterSidebar(query) {
+  const q = query.toLowerCase().trim();
+  document.querySelectorAll('.excat-group').forEach(group => {
+    let anyVisible = false;
+    group.querySelectorAll('.ex-btn').forEach(btn => {
+      const match = !q || btn.dataset.name.includes(q);
+      btn.classList.toggle('hidden', !match);
+      if (match) anyVisible = true;
+    });
+    group.style.display = anyVisible ? '' : 'none';
   });
 }
 
@@ -668,21 +736,17 @@ function addExercise(exId) {
 function renderExerciseList() {
   const list = document.getElementById('exercise-list');
   if (!currentItems.length) {
-    list.innerHTML = '';
-    const d = document.createElement('div');
-    d.className = 'empty-state';
-    d.innerHTML = '<div class="empty-icon">🪨</div><div>Click exercises in the sidebar to add them.</div>';
-    list.appendChild(d);
+    list.innerHTML = '<div class="empty-state"><div class="empty-icon">🪨</div><div>Click exercises in the sidebar to add them.</div></div>';
     return;
   }
   list.innerHTML = '';
   currentItems.forEach(item => {
     const ex = EXERCISES.find(e => e.id === item.exerciseId);
     if (!ex) return;
-    const cats = ex.cats.map(c => `<span class="cat-badge cat-${c}">${CATEGORIES[c].label}</span>`).join(' ');
+    const cats = ex.cats.map(c => `<span class="cat-badge cat-${c}">${CATEGORIES[c]?.label || c}</span>`).join(' ');
     const fields = ex.metrics.map(m => `
       <div class="metric-mini">
-        <label>${METRIC_LABELS[m]}</label>
+        <label>${METRIC_LABELS[m] || m}</label>
         <input type="number" min="0" placeholder="—" value="${item[m]||''}"
           onchange="updateMetric(${item.id},'${m}',this.value)">
       </div>`).join('');
@@ -735,7 +799,7 @@ function renderHistory() {
       const ex = EXERCISES.find(e => e.id === item.exerciseId);
       if (ex) ex.cats.forEach(c => cats.add(c));
     });
-    const badges = [...cats].map(c => `<span class="cat-badge cat-${c}">${CATEGORIES[c].label}</span>`).join(' ');
+    const badges = [...cats].map(c => `<span class="cat-badge cat-${c}">${CATEGORIES[c]?.label || c}</span>`).join(' ');
     const d = document.createElement('div');
     d.className = 'session-card';
     d.innerHTML = `
@@ -794,7 +858,6 @@ function getCategoryWeights(filtered) {
 function refreshStats() {
   const filtered = getFilteredSessions();
   const { weights, total } = getCategoryWeights(filtered);
-
   const totalSets = filtered.reduce((acc,s) =>
     acc + s.exercises.reduce((a,i) => a + (parseFloat(i.sets)||1), 0), 0);
 
@@ -882,6 +945,202 @@ function buildLineChart(filtered) {
 }
 
 // ═══════════════════════════════════════════
+// EVOLUTION GRAPHS
+// ═══════════════════════════════════════════
+
+// Which exercises are trackable AND have been logged at least once
+function getLoggedTrackableExercises() {
+  const loggedIds = new Set();
+  sessions.forEach(s => s.exercises.forEach(i => loggedIds.add(i.exerciseId)));
+  return EXERCISES.filter(ex => ex.trackable && loggedIds.has(ex.id));
+}
+
+function populateEvoSelect() {
+  const sel = document.getElementById('evo-exercise-select');
+  const current = sel.value;
+  const trackable = getLoggedTrackableExercises();
+  sel.innerHTML = '<option value="">Select an exercise...</option>';
+  trackable.forEach(ex => {
+    const opt = document.createElement('option');
+    opt.value = ex.id;
+    opt.textContent = ex.name;
+    sel.appendChild(opt);
+  });
+  // Restore selection if still valid
+  if (current && trackable.find(e => e.id === current)) {
+    sel.value = current;
+  }
+}
+
+function buildEvoMetricToggles(ex) {
+  const container = document.getElementById('evo-metric-toggles');
+  container.innerHTML = '';
+  if (!ex) return;
+
+  // Only show graphable metrics that this exercise actually has
+  const graphable = ex.metrics.filter(m => GRAPHABLE_METRICS.includes(m));
+  if (!graphable.length) return;
+
+  // Default active: the exercise's primary trackMetric
+  if (evoActiveMetrics.size === 0 || !graphable.some(m => evoActiveMetrics.has(m))) {
+    evoActiveMetrics = new Set([ex.trackMetric || graphable[0]]);
+  }
+
+  graphable.forEach(m => {
+    const btn = document.createElement('button');
+    btn.className = 'metric-toggle' + (evoActiveMetrics.has(m) ? ' active' : '');
+    btn.textContent = METRIC_LABELS[m] || m;
+    btn.onclick = () => {
+      if (evoActiveMetrics.has(m)) {
+        if (evoActiveMetrics.size === 1) return; // keep at least one
+        evoActiveMetrics.delete(m);
+      } else {
+        evoActiveMetrics.add(m);
+      }
+      btn.classList.toggle('active', evoActiveMetrics.has(m));
+      renderEvoChart(ex);
+    };
+    container.appendChild(btn);
+  });
+}
+
+function buildEvoGraph() {
+  const exId = document.getElementById('evo-exercise-select').value;
+  const container = document.getElementById('evo-graph-container');
+  if (!exId) { container.innerHTML = ''; return; }
+
+  const ex = EXERCISES.find(e => e.id === exId);
+  if (!ex) return;
+
+  evoActiveMetrics = new Set([ex.trackMetric || ex.metrics.find(m => GRAPHABLE_METRICS.includes(m))]);
+  buildEvoMetricToggles(ex);
+  renderEvoChart(ex);
+}
+
+function renderEvoChart(ex) {
+  const container = document.getElementById('evo-graph-container');
+
+  // Collect all data points for this exercise across all sessions, sorted by date
+  const dataByMetric = {};
+  GRAPHABLE_METRICS.forEach(m => dataByMetric[m] = []);
+
+  sessions
+    .slice()
+    .sort((a,b) => a.date.localeCompare(b.date))
+    .forEach(s => {
+      s.exercises.forEach(item => {
+        if (item.exerciseId !== ex.id) return;
+        const point = { date: s.date, sets: item.sets, reps: item.reps, time: item.time, weight: item.weight, duration: item.duration };
+        ex.metrics.filter(m => GRAPHABLE_METRICS.includes(m)).forEach(m => {
+          if (item[m] !== '' && item[m] !== undefined && item[m] !== null) {
+            dataByMetric[m].push({ date: s.date, value: parseFloat(item[m]), meta: point });
+          }
+        });
+      });
+    });
+
+  // Build datasets for active metrics
+  const METRIC_COLORS = {
+    weight:   '#ffa94d',
+    time:     '#5bc0eb',
+    sets:     '#7fff6e',
+    reps:     '#c896ff',
+    duration: '#ff6b6b',
+  };
+
+  const activeMets = [...evoActiveMetrics].filter(m => ex.metrics.includes(m));
+  const allDates = [...new Set(activeMets.flatMap(m => dataByMetric[m].map(p => p.date)))].sort();
+
+  if (!allDates.length) {
+    container.innerHTML = '<div class="evo-empty">No data logged for this exercise yet.</div>';
+    return;
+  }
+
+  // Build datasets
+  const datasets = activeMets.map(m => {
+    const color = METRIC_COLORS[m] || '#8fa899';
+    // For each date, take max value logged that day (best set)
+    const byDate = {};
+    dataByMetric[m].forEach(p => {
+      if (!byDate[p.date] || p.value > byDate[p.date].value) byDate[p.date] = p;
+    });
+    return {
+      label: METRIC_LABELS[m] || m,
+      data: allDates.map(d => byDate[d] ? byDate[d].value : null),
+      metaData: allDates.map(d => byDate[d] || null),
+      borderColor: color,
+      backgroundColor: color + '22',
+      pointBackgroundColor: color,
+      pointRadius: 5,
+      pointHoverRadius: 7,
+      borderWidth: 2,
+      tension: 0.3,
+      spanGaps: true,
+    };
+  });
+
+  // Render
+  container.innerHTML = `
+    <div class="evo-card">
+      <div class="evo-card-title">${ex.name} — evolution</div>
+      <div class="evo-card-sub">Best value per session · hover for details</div>
+      <div class="evo-chart-wrap"><canvas id="evo-chart"></canvas></div>
+    </div>`;
+
+  if (evoChartInst) evoChartInst.destroy();
+
+  evoChartInst = new Chart(document.getElementById('evo-chart').getContext('2d'), {
+    type: 'line',
+    data: { labels: allDates, datasets },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        legend: {
+          display: activeMets.length > 1,
+          labels: { color: '#8fa899', font: { family: 'Space Grotesk', size: 11 }, padding: 12 }
+        },
+        tooltip: {
+          backgroundColor: '#1c211f',
+          borderColor: '#2a3330',
+          borderWidth: 1,
+          titleColor: '#8fa899',
+          bodyColor: '#e8ede8',
+          callbacks: {
+            title: items => formatDate(items[0].label),
+            afterBody: (items) => {
+              // Show secondary info (sets, reps, etc.) from the meta of the first active dataset
+              const item = items[0];
+              const ds = datasets[item.datasetIndex];
+              const meta = ds.metaData[item.dataIndex];
+              if (!meta) return [];
+              const lines = [];
+              if (meta.meta.sets  && ex.metrics.includes('sets')  && !evoActiveMetrics.has('sets'))  lines.push(`Sets: ${meta.meta.sets}`);
+              if (meta.meta.reps  && ex.metrics.includes('reps')  && !evoActiveMetrics.has('reps'))  lines.push(`Reps: ${meta.meta.reps}`);
+              if (meta.meta.time  && ex.metrics.includes('time')  && !evoActiveMetrics.has('time'))  lines.push(`Time: ${meta.meta.time}s`);
+              if (meta.meta.weight&& ex.metrics.includes('weight')&& !evoActiveMetrics.has('weight')) lines.push(`Weight: ${meta.meta.weight}kg`);
+              return lines;
+            }
+          }
+        }
+      },
+      scales: {
+        x: {
+          ticks: { color: '#566b61', font: { size: 10, family: 'DM Mono' }, maxTicksLimit: 10 },
+          grid: { color: 'rgba(42,51,48,.5)' }
+        },
+        y: {
+          ticks: { color: '#566b61', font: { size: 11, family: 'DM Mono' } },
+          grid: { color: 'rgba(42,51,48,.5)' },
+          beginAtZero: false,
+        }
+      }
+    }
+  });
+}
+
+// ═══════════════════════════════════════════
 // NAV + UTILS
 // ═══════════════════════════════════════════
 function showPage(name, btn) {
@@ -890,7 +1149,7 @@ function showPage(name, btn) {
   document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
   if (btn) btn.classList.add('active');
   if (name === 'history') renderHistory();
-  if (name === 'stats') refreshStats();
+  if (name === 'stats') { refreshStats(); populateEvoSelect(); }
 }
 
 function today() { return new Date().toISOString().slice(0,10); }
