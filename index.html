@@ -546,47 +546,67 @@ const sb=createClient('https://smtxbkanwsxzhhwpxbmx.supabase.co','sb_publishable
 
 // ═══ EXERCISE DATA ═══
 const CATEGORIES={
-  finger:   {label:'Dedos',     color:'#ffa94d',loadType:'sets'},
-  strength: {label:'Força',     color:'#7fff6e',loadType:'sets'},
-  power:    {label:'Potência',  color:'#ff6b6b',loadType:'time'},
-  technique:{label:'Técnica',   color:'#c896ff',loadType:'time'},
-  endurance:{label:'Endurance', color:'#5bc0eb',loadType:'time'},
-  mobility: {label:'Mobilidade',color:'#ffd34f',loadType:'time'},
-  climbing: {label:'Escalada',  color:'#c896ff',loadType:'time'},
+  technique:{label:'Technique (Climbing)', color:'#c896ff',  loadType:'time'},
+  finger:   {label:'Fingers',   color:'#ffa94d',  loadType:'sets'},
+  strength: {label:'Strength',  color:'#7fff6e',  loadType:'sets'},
+  power:    {label:'Power',     color:'#ff6b6b',  loadType:'time'},
+  endurance:{label:'Endurance', color:'#5bc0eb',  loadType:'time'},
+  mobility: {label:'Mobility',  color:'#ffd34f',  loadType:'time'},
+
 };
 
 const DEFAULT_LOAD_SETTINGS={finger:1.5,strength:1.0,power:5,technique:8,endurance:5,mobility:10,climbing:5};
 
 const EXERCISES=[
+//Finger
   {id:'hangboard_max',   name:'Max hangs',            cats:['finger'],                       metrics:['weight','sets','time','edge'],        trackable:true, trackMetric:'weight'},
   {id:'hangboard_rep',   name:'Repeaters',            cats:['finger','endurance'],           metrics:['weight','sets','reps','time','edge'], trackable:true, trackMetric:'weight'},
   {id:'hangboard_pumax', name:'Pick-ups reps',        cats:['finger'],                       metrics:['weight','reps','sets','edge'],        trackable:true, trackMetric:'weight'},
   {id:'hangboard_putime',name:'Pick-ups time',        cats:['finger'],                       metrics:['weight','sets','time','edge'],        trackable:true, trackMetric:'weight'},
-  {id:'hangboard_drag',  name:'Drag hangs',           cats:['finger'],                       metrics:['weight','sets','time','edge'],        trackable:true, trackMetric:'weight'},
+  {id:'hangboard_drag',  name:'Drag max hangs',       cats:['finger'],                       metrics:['weight','sets','time','edge'],        trackable:true, trackMetric:'weight'},
+  {id:'hangboard_drag',  name:'Drag repeaters',       cats:['finger','endurance'],           metrics:['weight','sets','time','edge'],        trackable:true, trackMetric:'weight'},
   {id:'hangboard_dragpu',name:'Drag pick-ups',        cats:['finger'],                       metrics:['weight','sets','time','edge'],        trackable:true, trackMetric:'weight'},
   {id:'pinch_block',     name:'Pinch pick-ups',       cats:['finger'],                       metrics:['weight','sets','reps'],              trackable:true, trackMetric:'weight'},
+  {id:'abrahangs',       name:'Abrahangs',            cats:['finger'],                       metrics:['weight','sets','reps'],              trackable:true, trackMetric:'weight'},
+//Endurance  
   {id:'arc_traverse',    name:'ARC traversing',       cats:['endurance'],                    metrics:['duration'],                          trackable:false},
-  {id:'circuit_board',   name:'Circuit board laps',   cats:['endurance'],                    metrics:['sets','reps'],                       trackable:false},
+  {id:'on_off',          name:'On-Offs',              cats:['endurance'],                    metrics:['sets','time'],                       trackable:false},
   {id:'route_4x4',       name:'4×4s',                 cats:['endurance'],                    metrics:['sets'],                              trackable:false},
+//Strength  
   {id:'pullups',         name:'Pull-ups',             cats:['strength'],                     metrics:['weight','sets','reps'],              trackable:true, trackMetric:'weight'},
   {id:'lock_offs',       name:'Lock-offs',            cats:['strength'],                     metrics:['sets','time'],                       trackable:true, trackMetric:'time'},
   {id:'front_levers',    name:'Front lever',          cats:['strength'],                     metrics:['sets','time'],                       trackable:true, trackMetric:'time'},
   {id:'push_ups',        name:'Push-ups',             cats:['strength'],                     metrics:['sets','reps'],                       trackable:false},
-  {id:'lat_pulldown',    name:'Lat pulldown',         cats:['strength'],                     metrics:['weight','sets','reps'],              trackable:true, trackMetric:'weight'},
-  {id:'campus_max',      name:'Campus',               cats:['power','finger'],               metrics:['sets','reps'],                       trackable:false},
-  {id:'kilterboard',     name:'Kilterboard',          cats:['power','technique','finger'],    metrics:['duration'],                          trackable:false},
-  {id:'moonboard',       name:'Moonboard',            cats:['power','technique','finger'],    metrics:['duration'],                          trackable:false},
+  {id:'shoulder_press',  name:'Shoulder Press',       cats:['strength'],                     metrics:['weight','sets','reps'],              trackable:true, trackMetric:'weight'},
+  {id:'dips',            name:'Dips',                 cats:['strength'],                     metrics:['weight','sets','reps'],              trackable:true, trackMetric:'weight'},
+  {id:'wrist_curls',    name:'Wrist curls',         cats:['strength'],                     metrics:['weight','sets','reps'],              trackable:true, trackMetric:'weight'},
+   {id:'reverse_wrist_curls',    name:'Reverse wrist curls',         cats:['strength'],                     metrics:['weight','sets','reps'],              trackable:true, trackMetric:'weight'},
+  
+//Power  
+  {id:'campus_boulders', name:'Campus boulders',               cats:['power','finger'],               metrics:['sets','reps'],                       trackable:false},
+  {id:'campus_board',    name:'Campus board',          cats:['power','technique','finger'],    metrics:['duration'],                          trackable:false},
+  {id:'exp_pull_ups',    name:'Explosive Pull-Ups',            cats:['power','technique','finger'],    metrics:['duration'],                          trackable:false},
   {id:'tensionboard',    name:'Tensionboard',         cats:['power','technique','finger'],    metrics:['duration'],                          trackable:false},
   {id:'spraywall',       name:'Spraywall',            cats:['power','technique','finger'],    metrics:['duration'],                          trackable:false},
   {id:'boulder_proj',    name:'Boulder projects',     cats:['power','technique','finger'],    metrics:['sets'],                              trackable:false},
-  {id:'cordi_training',  name:'Coordination training',cats:['technique','power'],             metrics:['sets','reps'],                       trackable:false},
-  {id:'slab_drills',     name:'Slabs',                cats:['technique'],                    metrics:['duration'],                          trackable:false},
-  {id:'footwork_drills', name:'Footwork drills',      cats:['technique'],                    metrics:['sets','reps'],                       trackable:false},
-  {id:'lead_climbing',   name:'Lead climbing',        cats:['technique','endurance'],         metrics:['duration'],                          trackable:false},
+//Technique
+  {id:'open_climb',      name:'Open climbing',        cats:['technique'],                     metrics:['duration'],                          trackable:false},
+  {id:'moonboard',       name:'Moonboard',            cats:['technique','finger','power'],        metrics:['duration'],                          trackable:false},
+  {id:'kilterboard',     name:'Kilterboard',          cats:['technique','finger','power'],                      metrics:['duration'],                          trackable:false},
+  {id:'projecting',      name:'Projecting',           cats:['technique','finger','power'],                      metrics:['duration'],                          trackable:false},
+  {id:'out__boulder',    name:'Outdoor Boulder',      cats:['technique','finger','power'],                      metrics:['duration'],                          trackable:false},
+  {id:'out_lead',        name:'Outdoor Lead',         cats:['technique','finger','endurance'],                      metrics:['duration'],                          trackable:false},  
+  {id:'cordi_training',  name:'Coordination training',cats:['technique','power'],             metrics:['duration'],                       trackable:false},
+  {id:'slab_drills',     name:'Slab training',        cats:['technique'],                    metrics:['duration'],                          trackable:false},
+  {id:'footwork_drills', name:'Footwork drills',      cats:['technique'],                    metrics:['duration'],                       trackable:false},
+//Mobility  
   {id:'hip_flex',        name:'Hip flexibility',      cats:['mobility'],                     metrics:['duration'],                          trackable:false},
   {id:'ham_flex',        name:'Hamstring flexibility',cats:['mobility'],                     metrics:['duration'],                          trackable:false},
   {id:'shoulder_mob',    name:'Shoulder mobility',    cats:['mobility'],                     metrics:['sets','reps'],                       trackable:false},
   {id:'wrist_warm',      name:'Wrist warm-up',        cats:['mobility'],                     metrics:['duration'],                          trackable:false},
+   {id:'splits',      name:'Splits progression',        cats:['mobility'],                     metrics:['duration'],                          trackable:false},
+
+
 ];
 
 // Testing exercises — separate from regular exercises
