@@ -271,12 +271,119 @@ select option{background:var(--bg3);}
 .page-title{font-size:22px;font-weight:600;letter-spacing:-.5px;margin-bottom:6px;}
 .page-subtitle{font-size:14px;color:var(--text3);margin-bottom:28px;}
 
-@media(max-width:768px){
-  .shell{grid-template-columns:1fr;height:auto;overflow:visible;}
-  sidebar{display:none;}
-  main{height:auto;padding:20px 16px;}
-  .grid-2,.grid-3{grid-template-columns:1fr;}
+/* ── Mobile bottom tab bar ── */
+.mob-tabs{display:none;}
+
+/* ── Mobile exercise picker (floating sheet) ── */
+.mob-picker-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:500;opacity:0;transition:opacity .25s;}
+.mob-picker-overlay.open{opacity:1;}
+.mob-picker-sheet{
+  position:fixed;bottom:0;left:0;right:0;z-index:501;
+  background:var(--bg2);border-top:1px solid var(--border2);
+  border-radius:20px 20px 0 0;
+  max-height:85vh;display:flex;flex-direction:column;
+  transform:translateY(100%);transition:transform .3s cubic-bezier(.16,1,.3,1);
 }
+.mob-picker-sheet.open{transform:translateY(0);}
+.mob-picker-handle{width:36px;height:4px;background:var(--border2);border-radius:2px;margin:12px auto 0;flex-shrink:0;}
+.mob-picker-header{display:flex;align-items:center;justify-content:space-between;padding:14px 20px 10px;flex-shrink:0;}
+.mob-picker-title{font-family:'DM Mono',monospace;font-size:12px;font-weight:500;color:var(--text3);letter-spacing:1px;text-transform:uppercase;}
+.mob-picker-close{background:none;border:none;color:var(--text3);font-size:20px;cursor:pointer;padding:4px;line-height:1;}
+.mob-picker-search{position:relative;padding:0 16px 12px;flex-shrink:0;}
+.mob-picker-search input{padding:10px 14px 10px 36px;font-size:14px;}
+.mob-picker-search-icon{position:absolute;left:26px;top:50%;transform:translateY(-60%);color:var(--text3);font-size:14px;pointer-events:none;}
+.mob-picker-list{overflow-y:auto;padding:0 12px 16px;flex:1;}
+.mob-picker-cat-header{font-size:11px;font-weight:600;letter-spacing:.5px;padding:10px 8px 4px;sticky:top 0;}
+.mob-picker-ex-btn{width:100%;text-align:left;background:none;border:none;color:var(--text2);font-family:inherit;font-size:15px;padding:12px 10px;border-radius:8px;cursor:pointer;display:flex;align-items:center;gap:10px;transition:background .1s;}
+.mob-picker-ex-btn:hover,.mob-picker-ex-btn:active{background:var(--bg3);color:var(--text);}
+.mob-picker-ex-btn .dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+
+/* ── Floating + button ── */
+.mob-fab{
+  display:none;
+  position:fixed;bottom:78px;right:20px;z-index:100;
+  width:52px;height:52px;border-radius:50%;
+  background:var(--accent);color:#0d1a0b;
+  border:none;font-size:24px;font-weight:300;
+  cursor:pointer;box-shadow:0 4px 20px rgba(127,255,110,.35);
+  align-items:center;justify-content:center;
+  transition:transform .15s,box-shadow .15s;
+}
+.mob-fab:active{transform:scale(.92);}
+
+@media(max-width:768px){
+  /* Shell becomes full-height scrollable with bottom padding for tab bar */
+  .shell{
+    display:flex;flex-direction:column;
+    height:100vh;overflow:hidden;
+    grid-template-columns:unset;grid-template-rows:unset;
+  }
+  header{
+    flex-shrink:0;padding:0 16px;
+    /* On mobile: logo + sync badge + user dot only */
+  }
+  /* Hide desktop nav and user pill text on mobile */
+  header nav{display:none;}
+  .user-pill span{display:none;}
+  .user-pill{padding:4px 8px;}
+  .logout-btn{font-size:11px;padding:4px 6px;}
+  .logo-by{display:none;}
+
+  sidebar{display:none;}
+
+  main{
+    flex:1;overflow-y:auto;padding:16px 16px 80px;
+    /* 80px = bottom tab bar height */
+  }
+  .grid-2,.grid-3{grid-template-columns:1fr;}
+
+  /* Bottom tab bar */
+  .mob-tabs{
+    display:flex;
+    position:fixed;bottom:0;left:0;right:0;
+    height:60px;z-index:200;
+    background:var(--bg2);border-top:1px solid var(--border);
+    padding:0 4px;padding-bottom:env(safe-area-inset-bottom);
+  }
+  .mob-tab{
+    flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:3px;background:none;border:none;cursor:pointer;
+    font-family:inherit;font-size:10px;font-weight:500;
+    color:var(--text3);transition:color .15s;padding:6px 0;
+    letter-spacing:.2px;
+  }
+  .mob-tab.active{color:var(--accent);}
+  .mob-tab svg{width:20px;height:20px;stroke:currentColor;stroke-width:1.8;fill:none;stroke-linecap:round;stroke-linejoin:round;}
+
+  /* FAB visible on log page only */
+  .mob-fab{display:flex;}
+
+  /* Toast lifted above tab bar */
+  #toast{bottom:76px;}
+
+  /* Period tabs scroll on mobile */
+  .period-tabs{overflow-x:auto;width:100%;padding-bottom:2px;}
+  .period-tab{white-space:nowrap;}
+
+  /* Stats topbar stacks */
+  .stats-topbar{flex-wrap:wrap;gap:10px;}
+
+  /* Evo controls stack */
+  .evo-controls{flex-direction:column;align-items:flex-start;}
+
+  /* Focus bar label shorter */
+  .focus-bar-label{width:80px;font-size:11px;}
+
+  /* Test pct val narrower */
+  .test-pct-val{width:auto;font-size:11px;}
+
+  /* Settings panel full-screen on mobile */
+  .settings-panel{max-width:100%;border-radius:var(--radius2) var(--radius2) 0 0;padding:24px 20px;position:fixed;bottom:0;left:0;right:0;max-height:92vh;}
+
+  /* Calendar full width on mobile */
+  .date-cal{width:calc(100vw - 32px);max-width:320px;}
+}
+
 ::-webkit-scrollbar{width:5px;}
 ::-webkit-scrollbar-track{background:transparent;}
 ::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px;}
@@ -374,7 +481,7 @@ select option{background:var(--bg3);}
       <!-- LOG -->
       <div class="page active" id="page-log">
         <div class="page-title">New session</div>
-        <div class="page-subtitle">Click exercises in the sidebar to add them.</div>
+        <div class="page-subtitle">Click exercises in the sidebar, or tap ＋ on mobile.</div>
         <div class="grid-2" style="margin-bottom:16px">
           <div class="field-group">
             <label class="field-label">Date</label>
@@ -386,7 +493,7 @@ select option{background:var(--bg3);}
           </div>
           <div class="field-group"><label class="field-label">Location</label><input type="text" id="session-location" placeholder="e.g. São Rock, Facho"></div>
         </div>
-        <div id="exercise-list"><div class="empty-state"><div class="empty-icon">🪨</div><div>Click exercises in the sidebar to add them.</div></div></div>
+        <div id="exercise-list"><div class="empty-state"><div class="empty-icon">🪨</div><div>Click exercises in the sidebar to add them, or tap ＋.</div></div></div>
         <div class="divider"></div>
         <div class="field-group"><label class="field-label">Session notes</label><textarea id="session-notes" rows="3" placeholder="How did it go? Any PRs, injuries, observations..."></textarea></div>
         <div style="display:flex;gap:10px;margin-top:4px">
@@ -483,6 +590,44 @@ select option{background:var(--bg3);}
   </div>
 </div>
 <div id="toast"></div>
+
+<!-- MOBILE: Floating + button (log page only) -->
+<button class="mob-fab" id="mob-fab" onclick="openMobPicker()" aria-label="Add exercise">＋</button>
+
+<!-- MOBILE: Exercise picker sheet -->
+<div class="mob-picker-overlay" id="mob-picker-overlay" onclick="closeMobPicker()"></div>
+<div class="mob-picker-sheet" id="mob-picker-sheet">
+  <div class="mob-picker-handle"></div>
+  <div class="mob-picker-header">
+    <span class="mob-picker-title">Add exercise</span>
+    <button class="mob-picker-close" onclick="closeMobPicker()">✕</button>
+  </div>
+  <div class="mob-picker-search">
+    <span class="mob-picker-search-icon">⌕</span>
+    <input type="text" id="mob-search" placeholder="Search exercises..." oninput="filterMobPicker(this.value)">
+  </div>
+  <div class="mob-picker-list" id="mob-picker-list"></div>
+</div>
+
+<!-- MOBILE: Bottom tab bar -->
+<nav class="mob-tabs" id="mob-tabs">
+  <button class="mob-tab active" onclick="showPage('log')" data-page="log">
+    <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+    Log
+  </button>
+  <button class="mob-tab" onclick="showPage('history')" data-page="history">
+    <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+    History
+  </button>
+  <button class="mob-tab" onclick="showPage('stats')" data-page="stats">
+    <svg viewBox="0 0 24 24"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
+    Analytics
+  </button>
+  <button class="mob-tab" onclick="showPage('testing')" data-page="testing">
+    <svg viewBox="0 0 24 24"><path d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18"/></svg>
+    Testing
+  </button>
+</nav>
 
 <script>
 // ═══ SUPABASE ═══
@@ -1321,8 +1466,15 @@ function renderTestPage(){
 function showPage(name,btn){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.getElementById('page-'+name).classList.add('active');
-  document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
-  if(btn)btn.classList.add('active');
+  // Sync desktop nav
+  document.querySelectorAll('header nav button').forEach(b=>b.classList.remove('active'));
+  const navBtns=document.querySelectorAll('header nav button');
+  const pages=['log','history','stats','testing'];
+  const idx=pages.indexOf(name);
+  if(idx>=0&&navBtns[idx])navBtns[idx].classList.add('active');
+  // Sync mobile tab bar
+  document.querySelectorAll('.mob-tab').forEach(t=>t.classList.toggle('active',t.dataset.page===name));
+  updateMobFab(name);
   if(name==='history')renderHistory();
   if(name==='stats'){refreshStats();populateEvoSelect();}
   if(name==='testing')renderTestPage();
@@ -1330,6 +1482,85 @@ function showPage(name,btn){
 function today(){return new Date().toISOString().slice(0,10);}
 function formatDate(str){if(!str)return'—';return new Date(str+'T12:00:00').toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short',year:'numeric'});}
 function toast(msg){const el=document.getElementById('toast');el.textContent=msg;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),2400);}
+
+// ═══ MOBILE ═══
+function updateMobFab(page){
+  const fab=document.getElementById('mob-fab');
+  if(fab)fab.style.display=page==='log'?'flex':'none';
+}
+
+function buildMobPicker(){
+  const list=document.getElementById('mob-picker-list');
+  if(!list)return;
+  list.innerHTML='';
+  // Tests section
+  const testDiv=document.createElement('div');
+  testDiv.innerHTML=`<div class="mob-picker-cat-header" style="color:#d0d0d0">TESTS</div>`;
+  TEST_EXERCISES.forEach(ex=>{
+    const btn=document.createElement('button');
+    btn.className='mob-picker-ex-btn';btn.dataset.name=ex.name.toLowerCase();
+    btn.innerHTML=`<span class="dot" style="background:#d0d0d0"></span>${ex.name}`;
+    btn.onclick=()=>{closeMobPicker();showPage('testing',document.querySelectorAll('.mob-tab')[3]);updateMobFab('testing');};
+    testDiv.appendChild(btn);
+  });
+  list.appendChild(testDiv);
+  // Regular exercises grouped by primary category
+  const grouped={};Object.keys(CATEGORIES).forEach(k=>grouped[k]=[]);
+  EXERCISES.forEach(ex=>{const p=ex.cats[0];if(grouped[p])grouped[p].push(ex);});
+  Object.entries(grouped).forEach(([catKey,exes])=>{
+    if(!exes.length)return;
+    const cat=CATEGORIES[catKey];
+    const div=document.createElement('div');
+    div.innerHTML=`<div class="mob-picker-cat-header" style="color:${cat.color}">${cat.label.toUpperCase()}</div>`;
+    exes.forEach(ex=>{
+      const btn=document.createElement('button');
+      btn.className='mob-picker-ex-btn';btn.dataset.name=ex.name.toLowerCase();
+      btn.innerHTML=`<span class="dot" style="background:${cat.color}"></span>${ex.name}`;
+      btn.onclick=()=>{addExercise(ex.id);closeMobPicker();};
+      div.appendChild(btn);
+    });
+    list.appendChild(div);
+  });
+}
+
+function openMobPicker(){
+  buildMobPicker();
+  document.getElementById('mob-picker-overlay').style.display='block';
+  document.getElementById('mob-picker-sheet').style.display='flex';
+  // Trigger transition next frame
+  requestAnimationFrame(()=>{
+    requestAnimationFrame(()=>{
+      document.getElementById('mob-picker-overlay').classList.add('open');
+      document.getElementById('mob-picker-sheet').classList.add('open');
+    });
+  });
+  document.getElementById('mob-search').value='';
+  filterMobPicker('');
+  setTimeout(()=>document.getElementById('mob-search').focus(),350);
+}
+
+function closeMobPicker(){
+  document.getElementById('mob-picker-overlay').classList.remove('open');
+  document.getElementById('mob-picker-sheet').classList.remove('open');
+  setTimeout(()=>{
+    document.getElementById('mob-picker-overlay').style.display='none';
+    document.getElementById('mob-picker-sheet').style.display='none';
+  },300);
+}
+
+function filterMobPicker(q){
+  q=q.toLowerCase().trim();
+  document.querySelectorAll('#mob-picker-list .mob-picker-ex-btn').forEach(btn=>{
+    btn.style.display=!q||btn.dataset.name.includes(q)?'':'none';
+  });
+  // hide category headers with no visible buttons
+  document.querySelectorAll('#mob-picker-list > div').forEach(group=>{
+    const anyVisible=[...group.querySelectorAll('.mob-picker-ex-btn')].some(b=>b.style.display!=='none');
+    group.style.display=anyVisible?'':'none';
+  });
+}
+
+
 </script>
 </body>
 </html>
